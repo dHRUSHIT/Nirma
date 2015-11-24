@@ -1,64 +1,33 @@
 
 %
 % 12BCE023
-% The program first starts by asking for an input that determines if the user wants to add or substrace or multiply or divide
-% Then then it takes input for the operands
-% Once done, it calculates the value of the arithematic operation and then displays the value that is generated
+% This progran takes a list of integers and an integer for INSERT as an input and then inserts it at a desired position for its existance
 %
-%
-
+/*
 domains
-
+	LI = integer*
+	B=integer
 predicates
-choose()
-adds()
-subs()
-muls()
-divs()
-
-calcit(integer)
-
+	insert(B,LI,LI)
 clauses
-choose():-
-	write("1. Addition\n2. Substraction\n3. Multiplication\n4. Division\n"),
-	readint(C),
-	calcit(C).
-	calcit(1):- 
-		write("Addition A+B\n"),adds().
-	calcit(2):- 
-		write("Substraction A-B\n"),subs().
-	calcit(3):- 
-		write("Multiplication A*B\n"),
-		muls().
-	calcit(4):- 
-		write("Division A/B\n"),
-		divs().
-
-
-	adds():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A+B,
-		write(C).
-	subs():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A-B,
-		write(C).
-	muls():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A*B,
-		write(C).
-	divs():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A/B,
-		write(C).
-	
-GOAL
-	choose().
+	insert(B,List,[B|List]).
+*/
+domains
+	LI = integer*
+	B=integer
+predicates
+	insert(B,LI,LI)
+	insert_1(B,LI,LI)
+	%insert_2(B,LI,LI)
+clauses
+	insert_2(B,L1,[]):-
+		write("L1=",L1).
+	insert_2(B,L1,[H2|T2]):-
+		insert_2(B,[H2|L1],T2).
+	insert_1(B,[],L2):-
+		insert_2(B,[B],L2).
+	insert_1(B,[H1|T1],L2):-
+		insert_1(B,T1,[H1|L2]).
+	insert(B,L1,[]):-
+		insert_1(B,L1,[]).
+		
