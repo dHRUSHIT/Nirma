@@ -1,64 +1,46 @@
+%trace
 
 %
-% 12BCE023
-% The program first starts by asking for an input that determines if the user wants to add or substrace or multiply or divide
-% Then then it takes input for the operands
-% Once done, it calculates the value of the arithematic operation and then displays the value that is generated
-%
+% the quadratic function A*X^2 + B*X + C = 0 is considered
+% The program first asks for A then for B and then for C
+% It automatically calculates the value of the B^2-4*A*C and checks if it is greater than 0 or not
+% If greater than 0 then it calculates the real roots
+% If not then displays that the roots are imaginary
 %
 
 domains
 
 predicates
-choose()
-adds()
-subs()
-muls()
-divs()
-
-calcit(integer)
+ask()
+calcroots(integer,integer,integer,integer)
+go()
 
 clauses
-choose():-
-	write("1. Addition\n2. Substraction\n3. Multiplication\n4. Division\n"),
-	readint(C),
-	calcit(C).
-	calcit(1):- 
-		write("Addition A+B\n"),adds().
-	calcit(2):- 
-		write("Substraction A-B\n"),subs().
-	calcit(3):- 
-		write("Multiplication A*B\n"),
-		muls().
-	calcit(4):- 
-		write("Division A/B\n"),
-		divs().
-
-
-	adds():-
-		write("enter A and B : "),
+	ask():-
+		write("Equation : \nAx^2 + Bx + C = 0\n"),
+		write("Enter A : "),
 		readint(A),
+		write("Enter B : "),
 		readint(B),
-		C=A+B,
-		write(C).
-	subs():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A-B,
-		write(C).
-	muls():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A*B,
-		write(C).
-	divs():-
-		write("enter A and B : "),
-		readint(A),
-		readint(B),
-		C=A/B,
-		write(C).
+		write("Enter C : "),
+		readint(C),
+		D = B*B-4*A*C,
+		calcroots(A,B,C,D).
+		
+	calcroots(X,Y,Z,R):-
+		R >= 0,
+		K = sqrt(R),
+		R1 = (-Y + K)/(2*X),
+		R2 = (-Y - K)/(2*X),
+		write("\nRoot 1 is "),write(R1),
+		write("\nRoot 2 is "),write(R2),nl.	
+	calcroots(X,Y,Z,R):-
+		R < 0,
+		write("complex roots \n"),nl.	
 	
+	
+	go():-
+		ask(),
+		go().
 GOAL
-	choose().
+	go()
